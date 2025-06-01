@@ -1,0 +1,608 @@
+/* Auth Page Styles */
+
+/* Подключение шрифта Cakra для страницы авторизации */
+@font-face {
+    font-family: 'Cakra';
+    src: url('../Cakra-Normal.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Navigation overrides for auth page */
+.nav-content-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav .nav-content-centered .logo,
+.nav .nav-content-centered .logo a {
+    font-family: 'Cakra', 'Inter', system-ui, sans-serif !important;
+    font-size: 2.5rem !important;
+    font-weight: 800 !important;
+    color: #0F5132 !important;
+    letter-spacing: 0.05em !important;
+    text-decoration: none;
+}
+
+.auth-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 140px 0 80px;
+    background: linear-gradient(135deg, #ECFDF5 0%, #F9FAFB 100%);
+}
+
+.auth-content {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.auth-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+}
+
+.auth-form {
+    background: var(--white);
+    padding: 3rem 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(5, 150, 105, 0.1);
+    transition: all 0.25s ease-in-out;
+}
+
+.auth-form.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.auth-form.fade-in {
+    opacity: 1;
+    pointer-events: auto;
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+.auth-form.slide-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    pointer-events: none;
+}
+
+.auth-form.slide-right {
+    opacity: 0;
+    transform: translateX(30px);
+    pointer-events: none;
+}
+
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.auth-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.auth-btn:hover::before {
+    left: 100%;
+}
+
+.auth-btn-telegram {
+    background: linear-gradient(135deg, #0088cc, #0077b3);
+    color: white;
+    border: 2px solid #0088cc;
+}
+
+.auth-btn-telegram:hover {
+    background: linear-gradient(135deg, #006fa3, #005a8a);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 136, 204, 0.3);
+}
+
+.auth-btn-email {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: 2px solid var(--primary);
+}
+
+.auth-btn-email:hover {
+    background: linear-gradient(135deg, var(--primary-dark), #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+}
+
+.auth-btn-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #E5E7EB;
+}
+
+.auth-divider span {
+    padding: 0 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    background: var(--white);
+}
+
+.auth-info {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #E5E7EB;
+}
+
+.auth-info p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .auth-section {
+        padding: 120px 1rem 60px;
+        min-height: calc(100vh - 60px);
+    }
+    
+    .auth-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .auth-form {
+        padding: 2rem 1.5rem;
+    }
+    
+    .auth-btn {
+        padding: 1.2rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .auth-content {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-title {
+        font-size: 2rem;
+    }
+    
+    .auth-form {
+        padding: 1.5rem 1rem;
+        margin: 0 1rem;
+    }
+    
+    .auth-btn {
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+    
+    .auth-btn span {
+        font-size: 0.9rem;
+    }
+}
+
+/* Loading state for buttons */
+.auth-btn.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.auth-btn.loading::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Success/Error states */
+.auth-btn.success {
+    background: linear-gradient(135deg, #10B981, #059669) !important;
+}
+
+.auth-btn.error {
+    background: linear-gradient(135deg, #EF4444, #DC2626) !important;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Focus states for accessibility */
+.auth-btn:focus {
+    outline: none;
+    ring: 3px solid rgba(5, 150, 105, 0.3);
+    ring-offset: 2px;
+}
+
+.auth-btn-telegram:focus {
+    ring-color: rgba(0, 136, 204, 0.3);
+}
+
+/* Email Modal Styles */
+.email-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.email-modal-content {
+    background: var(--white);
+    border-radius: 1rem;
+    padding: 0;
+    max-width: 450px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+    animation: modalAppear 0.3s ease forwards;
+}
+
+@keyframes modalAppear {
+    to {
+        transform: scale(1);
+    }
+}
+
+.email-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.email-modal-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.email-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.email-modal-close:hover {
+    background: #F3F4F6;
+    color: var(--text-dark);
+}
+
+.email-modal-body {
+    padding: 2rem;
+}
+
+.email-modal-body p {
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.email-input {
+    padding: 1rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--bg-light);
+}
+
+.email-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+}
+
+.email-submit-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.email-submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.email-submit-btn:hover::before {
+    left: 100%;
+}
+
+.email-submit-btn:hover {
+    background: linear-gradient(135deg, var(--primary-dark), #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+}
+
+.email-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Mobile responsive for modal */
+@media (max-width: 768px) {
+    .email-modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .email-modal-header {
+        padding: 1rem 1.5rem;
+    }
+    
+    .email-modal-body {
+        padding: 1.5rem;
+    }
+    
+    .email-input, .email-submit-btn {
+        padding: 0.9rem 1rem;
+    }
+}
+
+/* Email Auth Form Styles */
+.email-auth-form {
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+/* Анимации для переходов между блоками */
+.auth-form {
+    transition: all 0.25s ease-in-out;
+}
+
+.auth-form.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.auth-form.fade-in {
+    opacity: 1;
+    pointer-events: auto;
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.email-auth-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.email-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.email-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-align: left;
+}
+
+.email-input-field {
+    padding: 1rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--bg-light);
+}
+
+.email-input-field:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+}
+
+.checkboxes-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.checkbox-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--primary);
+    cursor: pointer;
+    margin-top: 0.125rem;
+}
+
+.checkbox-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.5;
+    cursor: pointer;
+    flex: 1;
+}
+
+.terms-link {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.terms-link:hover {
+    text-decoration: underline;
+}
+
+.email-auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auth-btn-submit {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: 2px solid var(--primary);
+}
+
+.auth-btn-submit:hover {
+    background: linear-gradient(135deg, var(--primary-dark), #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+}
+
+.auth-btn-back {
+    background: #F3F4F6;
+    color: var(--text-dark);
+    border: 2px solid #E5E7EB;
+}
+
+.auth-btn-back:hover {
+    background: #E5E7EB;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile responsive for email auth form */
+@media (max-width: 768px) {
+    .email-auth-form-content {
+        gap: 1.5rem;
+    }
+    
+    .email-input-field {
+        padding: 0.9rem;
+        font-size: 0.95rem;
+    }
+    
+    .checkbox-item {
+        gap: 0.5rem;
+    }
+    
+    .checkbox-input {
+        width: 1.1rem;
+        height: 1.1rem;
+    }
+    
+    .checkbox-label {
+        font-size: 0.85rem;
+    }
+} 

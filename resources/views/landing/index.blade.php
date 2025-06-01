@@ -17,7 +17,8 @@
             <a href="#about" class="nav-link">О нас</a>
         </div>
         <div class="nav-right">
-            <a href="#" class="login-btn">Войти</a>
+            <a href="{{ route('profile.index') }}" class="login-btn" style="margin-right: 0.5rem;">Профиль</a>
+            <a href="/login" class="login-btn">Войти</a>
             <button class="mobile-menu-btn">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>

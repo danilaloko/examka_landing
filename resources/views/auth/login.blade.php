@@ -21,6 +21,19 @@
         <div class="auth-content">
             <h1 class="auth-title">Авторизация</h1>
             
+            <!-- Сообщения об ошибках и успехе -->
+            @if(session('error'))
+                <div class="alert alert-error">
+                    {{ session('error') }}
+                </div>
+            @endif
+            
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            
             <!-- Основной блок авторизации -->
             <div class="auth-form" id="main-auth-form">
                 <div class="auth-buttons">

@@ -45,14 +45,34 @@ class AuthController extends Controller
     public function handleTelegramReturn(Request $request): \Illuminate\Http\RedirectResponse
     {
         try {
-            $telegramData = $request->all();
+            // Получаем данные из tgAuthResult параметра
+            $tgAuthResult = $request->get('tgAuthResult');
+            
+            if (empty($tgAuthResult)) {
+                Log::warning('Отсутствует параметр tgAuthResult');
+                return redirect('/login')->with('error', 'Не получены данные авторизации от Telegram');
+            }
+
+            // Декодируем base64 → JSON
+            $telegramDataJson = base64_decode($tgAuthResult);
+            if (!$telegramDataJson) {
+                Log::warning('Ошибка декодирования base64 tgAuthResult');
+                return redirect('/login')->with('error', 'Неверный формат данных от Telegram');
+            }
+
+            // Парсим JSON
+            $telegramData = json_decode($telegramDataJson, true);
+            if (!$telegramData) {
+                Log::warning('Ошибка парсинга JSON из tgAuthResult');
+                return redirect('/login')->with('error', 'Неверный формат данных от Telegram');
+            }
             
             Log::info('Получены данные от Telegram OAuth', $telegramData);
 
             // Проверяем подлинность данных
             if (!$this->telegramAuthService->verifyTelegramAuth($telegramData)) {
                 Log::warning('Недействительные данные от Telegram OAuth');
-                return redirect('/login')->with('error', 'Ошибка авторизации через Telegram');
+                return redirect('/login')->with('error', 'Ошибка проверки подлинности данных Telegram');
             }
 
             // Находим или создаем пользователя

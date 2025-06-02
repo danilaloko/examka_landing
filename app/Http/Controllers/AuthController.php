@@ -27,6 +27,59 @@ class AuthController extends Controller
     }
 
     /**
+     * Перенаправление на Telegram OAuth
+     */
+    public function redirectToTelegram(): \Illuminate\Http\RedirectResponse
+    {
+        $redirectUrl = url('/auth/telegram/return');
+        $telegramAuthUrl = $this->telegramAuthService->generateTelegramAuthUrl($redirectUrl);
+        
+        Log::info('Перенаправление на Telegram OAuth', ['url' => $telegramAuthUrl]);
+        
+        return redirect()->away($telegramAuthUrl);
+    }
+
+    /**
+     * Обработка возврата с Telegram OAuth
+     */
+    public function handleTelegramReturn(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        try {
+            $telegramData = $request->all();
+            
+            Log::info('Получены данные от Telegram OAuth', $telegramData);
+
+            // Проверяем подлинность данных
+            if (!$this->telegramAuthService->verifyTelegramAuth($telegramData)) {
+                Log::warning('Недействительные данные от Telegram OAuth');
+                return redirect('/login')->with('error', 'Ошибка авторизации через Telegram');
+            }
+
+            // Находим или создаем пользователя
+            $user = $this->telegramAuthService->findOrCreateUser($telegramData);
+
+            // Авторизуем пользователя
+            Auth::login($user, true);
+
+            Log::info('Пользователь успешно авторизован через Telegram OAuth', [
+                'user_id' => $user->id,
+                'telegram_id' => $user->telegram_id
+            ]);
+
+            return redirect('/profile')->with('success', 'Добро пожаловать!');
+
+        } catch (\Exception $e) {
+            Log::error('Ошибка при обработке возврата с Telegram OAuth', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->all()
+            ]);
+
+            return redirect('/login')->with('error', 'Произошла ошибка при авторизации');
+        }
+    }
+
+    /**
      * Обработка авторизации через Telegram (callback)
      */
     public function handleTelegramCallback(Request $request): JsonResponse

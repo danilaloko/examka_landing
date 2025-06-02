@@ -108,6 +108,27 @@ class TelegramAuthService
     }
 
     /**
+     * Генерирует URL для Telegram OAuth авторизации
+     */
+    public function generateTelegramAuthUrl(string $redirectUrl): string
+    {
+        $botId = config('services.telegram.bot_id');
+        
+        if (empty($botId)) {
+            throw new \Exception('TELEGRAM_BOT_ID не настроен');
+        }
+        
+        $params = [
+            'bot_id' => $botId,
+            'origin' => url('/'),
+            'request_access' => 'write',
+            'return_to' => $redirectUrl
+        ];
+        
+        return 'https://oauth.telegram.org/auth?' . http_build_query($params);
+    }
+
+    /**
      * Форматирует данные пользователя для ответа
      */
     public function formatUserData(User $user): array

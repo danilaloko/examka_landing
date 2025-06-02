@@ -18,6 +18,8 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::get('/auth', [AuthController::class, 'showLoginForm']);
 
 // API маршруты для обработки авторизации
+Route::get('/auth/telegram/redirect', [AuthController::class, 'redirectToTelegram'])->name('auth.telegram.redirect');
+Route::get('/auth/telegram/return', [AuthController::class, 'handleTelegramReturn'])->name('auth.telegram.return');
 Route::post('/auth/telegram/callback', [AuthController::class, 'handleTelegramCallback'])->name('auth.telegram.callback');
 Route::post('/auth/telegram', [AuthController::class, 'handleTelegramCallback'])->name('auth.telegram');
 Route::post('/auth/email', [AuthController::class, 'loginWithEmail'])->name('auth.email');

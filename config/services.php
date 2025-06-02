@@ -37,6 +37,8 @@ return [
 
     'telegram' => [
         'bot_token' => env('TELEGRAM_BOT_TOKEN'),
+        'bot_id' => env('TELEGRAM_BOT_ID'),
+        'bot_username' => env('TELEGRAM_BOT_USERNAME', 'examka_bot'),
         'webhook_url' => env('TELEGRAM_WEBHOOK_URL'),
     ],
 

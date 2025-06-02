@@ -24,16 +24,12 @@
             <!-- Основной блок авторизации -->
             <div class="auth-form" id="main-auth-form">
                 <div class="auth-buttons">
-                    <!-- Виджет Telegram авторизации -->
-                    <div class="telegram-widget-container">
-                        <script async src="https://telegram.org/js/telegram-widget.js?22" 
-                                data-telegram-login="examka_bot" 
-                                data-size="large" 
-                                data-userpic="false" 
-                                data-onauth="onTelegramAuth(user)" 
-                                data-request-access="write">
-                        </script>
-                    </div>
+                    <button class="auth-btn auth-btn-telegram" onclick="loginWithTelegram()">
+                        <svg class="auth-btn-icon" width="24" height="24" fill="currentColor" viewBox="0 0 496 512">
+                            <path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/>
+                        </svg>
+                        <span>Войти через Telegram</span>
+                    </button>
                     
                     <div class="auth-divider">
                         <span>или</span>
@@ -130,13 +126,18 @@
 </footer>
 
 <script>
-// Callback функция для Telegram авторизации
+// Простая redirect авторизация через Telegram
+function loginWithTelegram() {
+    const button = document.querySelector('.auth-btn-telegram');
+    setButtonLoading(button, true);
+    
+    // Перенаправляем на Telegram OAuth URL  
+    window.location.href = '/auth/telegram/redirect';
+}
+
+// Callback функция для Telegram авторизации (оставляем для совместимости)
 async function onTelegramAuth(user) {
     console.log('Получены данные от Telegram:', user);
-    
-    // Показываем индикатор загрузки
-    const widgetContainer = document.querySelector('.telegram-widget-container');
-    showTelegramLoading(widgetContainer);
     
     try {
         const response = await fetch('/auth/telegram/callback', {
@@ -151,59 +152,15 @@ async function onTelegramAuth(user) {
         const data = await response.json();
         
         if (data.success) {
-            showTelegramSuccess(widgetContainer);
             setTimeout(() => {
                 window.location.href = data.redirect_url || '/profile';
-            }, 1500);
+            }, 500);
         } else {
-            showTelegramError(widgetContainer);
             alert(data.message || 'Ошибка авторизации через Telegram');
         }
     } catch (error) {
         console.error('Ошибка авторизации через Telegram:', error);
-        showTelegramError(widgetContainer);
         alert('Произошла ошибка. Попробуйте снова.');
-    }
-}
-
-function showTelegramLoading(container) {
-    const loader = document.createElement('div');
-    loader.className = 'telegram-loader';
-    loader.innerHTML = `
-        <div class="telegram-loader-content">
-            <div class="spinner"></div>
-            <span>Авторизуемся...</span>
-        </div>
-    `;
-    container.appendChild(loader);
-}
-
-function showTelegramSuccess(container) {
-    const loader = container.querySelector('.telegram-loader');
-    if (loader) {
-        loader.innerHTML = `
-            <div class="telegram-loader-content success">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M16.707 5.293a1 1 0 0 1 0 1.414l-8 8a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L8 12.586l7.293-7.293a1 1 0 0 1 1.414 0z"/>
-                </svg>
-                <span>Успешная авторизация!</span>
-            </div>
-        `;
-    }
-}
-
-function showTelegramError(container) {
-    const loader = container.querySelector('.telegram-loader');
-    if (loader) {
-        loader.innerHTML = `
-            <div class="telegram-loader-content error">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/>
-                </svg>
-                <span>Ошибка авторизации</span>
-            </div>
-        `;
-        setTimeout(() => loader.remove(), 3000);
     }
 }
 

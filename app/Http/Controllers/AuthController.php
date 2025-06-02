@@ -21,8 +21,15 @@ class AuthController extends Controller
     /**
      * Показать страницу авторизации
      */
-    public function showLoginForm(): View
+    public function showLoginForm(Request $request)
     {
+        // Проверяем если есть tgAuthResult в параметрах (fallback)
+        $tgAuthResult = $request->get('tgAuthResult');
+        if (!empty($tgAuthResult)) {
+            Log::info('Получен tgAuthResult на /login, перенаправляем на обработку');
+            return $this->handleTelegramReturn($request);
+        }
+        
         return view('auth.login');
     }
 

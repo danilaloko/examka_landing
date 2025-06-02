@@ -605,4 +605,73 @@
     .checkbox-label {
         font-size: 0.85rem;
     }
+}
+
+/* Telegram Widget Styles */
+.telegram-widget-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+    position: relative;
+}
+
+/* Стили для загрузчика Telegram авторизации */
+.telegram-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    z-index: 10;
+}
+
+.telegram-loader-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.telegram-loader-content.success {
+    color: var(--success);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.telegram-loader-content.error {
+    color: #EF4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Настройка стилей самого Telegram виджета */
+.telegram-widget-container iframe {
+    border-radius: 0.75rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.telegram-widget-container iframe:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 136, 204, 0.3);
 } 
